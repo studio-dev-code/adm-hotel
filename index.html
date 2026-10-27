@@ -3,101 +3,82 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="robots" content="noindex, nofollow">
-    <title>Painel da gerência | Beach Hills</title>
-    <link rel="stylesheet" href="admin.css">
-    <script src= "supabase-config.js"></script>
-    <script type="module" src="admin.js"></script>
+    <meta name="description" content="Compartilhe sua experiência no Beach Hills.">
+    <title>Comentários | Beach Hills</title>
+    <link rel="stylesheet" href="styles.css">
+    <script type="module" src="public.js"></script>
 </head>
 <body>
-    <section id="login-view" class="login-view" aria-labelledby="titulo-login">
-        <div class="login-visual" aria-hidden="true">
-            <img src="https://media.omnibees.com/Images/9865/Property/1285667.jpg" alt="">
-            <div class="login-visual-text">
-                <p>BEACH HILLS</p>
-                <strong>Gestão de avaliações dos hóspedes</strong>
+    <header class="site-header">
+        <a class="brand" href="#inicio" aria-label="Beach Hills - início">
+            <img
+                src="https://irp.cdn-website.com/eba97c45/dms3rep/multi/opt/logo+beach+hills-640w.png"
+                alt="Beach Hills"
+            >
+            <span>Comentários</span>
+        </a>
+        <nav aria-label="Navegação principal">
+            <a href="#comentarios">Comentários</a>
+        </nav>
+    </header>
+
+    <main id="inicio">
+        <section class="guest-hero" aria-labelledby="titulo-principal">
+            <img
+                src="https://media.omnibees.com/Images/9865/Property/1285667.jpg"
+                alt="Piscina e área de lazer do Beach Hills em um dia ensolarado"
+            >
+            <div class="guest-hero-content">
+                <p class="eyebrow">BEACH HILLS</p>
+                <h1 id="titulo-principal">Conte como foi sua experiência</h1>
+                <p>Sua opinião ajuda outros hóspedes a planejar momentos especiais.</p>
             </div>
-        </div>
+        </section>
 
-        <div class="login-side">
-            <div class="login-card">
-                <img
-                    class="login-logo"
-                    src="https://irp.cdn-website.com/eba97c45/dms3rep/multi/opt/logo+beach+hills-640w.png"
-                    alt="Beach Hills"
-                >
-                <h1 id="titulo-login">Acesso da gerência</h1>
-                <p class="login-subtitle">Entre para moderar os comentários do site.</p>
+        <div class="content-grid public-grid">
+            <section class="panel" id="comentarios" aria-labelledby="titulo-formulario">
+                <h2 id="titulo-formulario">Deixe sua avaliação</h2>
+                <form id="comment-form">
+                    <label for="nome">Seu nome</label>
+                    <input id="nome" name="nome" type="text" maxlength="80" autocomplete="name" required>
 
-                <form id="login-form">
-                    <label for="email-admin">E-mail</label>
-                    <input id="email-admin" name="email" type="email" autocomplete="email" required>
+                    <fieldset class="rating-field">
+                        <legend>Sua nota</legend>
+                        <div class="star-rating">
+                            <input id="nota-1" name="nota" type="radio" value="1" required>
+                            <label for="nota-1" aria-label="1 estrela">★</label>
+                            <input id="nota-2" name="nota" type="radio" value="2">
+                            <label for="nota-2" aria-label="2 estrelas">★</label>
+                            <input id="nota-3" name="nota" type="radio" value="3">
+                            <label for="nota-3" aria-label="3 estrelas">★</label>
+                            <input id="nota-4" name="nota" type="radio" value="4">
+                            <label for="nota-4" aria-label="4 estrelas">★</label>
+                            <input id="nota-5" name="nota" type="radio" value="5">
+                            <label for="nota-5" aria-label="5 estrelas">★</label>
+                        </div>
+                    </fieldset>
 
-                    <label for="senha-admin">Senha</label>
-                    <input id="senha-admin" name="password" type="password" autocomplete="current-password" required>
+                    <label for="comentario">Seu comentário</label>
+                    <textarea id="comentario" name="comentario" rows="5" maxlength="2000" required></textarea>
 
-                    <button type="submit">Entrar</button>
+                    <p class="form-note">Seu comentário poderá aparecer no site em alguns minutos.</p>
+                    <button type="submit">Enviar comentário</button>
+                    <p id="form-message" class="status-message" role="status" aria-live="polite"></p>
                 </form>
+            </section>
 
-                <p id="admin-message" class="login-message" role="status" aria-live="polite"></p>
-                <a class="back-link" href="index.html">← Voltar para o site</a>
-            </div>
+            <section class="panel" aria-labelledby="titulo-comentarios">
+                <h2 id="titulo-comentarios">Avaliações publicadas</h2>
+                <p id="comments-message" class="empty-state" role="status" aria-live="polite">
+                    Carregando avaliações...
+                </p>
+                <div id="comments-list" class="comments-list"></div>
+            </section>
         </div>
-    </section>
+    </main>
 
-    <div id="dashboard-view" class="dashboard" hidden>
-        <header class="topbar">
-            <div class="topbar-brand">
-                <img
-                    src="https://irp.cdn-website.com/eba97c45/dms3rep/multi/opt/logo+beach+hills-640w.png"
-                    alt="Beach Hills"
-                >
-                <span>Painel da gerência</span>
-            </div>
-            <div class="topbar-user">
-                <span id="user-email" class="user-email"></span>
-                <button id="logout-button" class="ghost-button" type="button">Sair</button>
-            </div>
-        </header>
-
-        <main class="dashboard-main">
-            <div class="dashboard-heading">
-                <div>
-                    <h1>Avaliações dos hóspedes</h1>
-                    <p>Publique os comentários aprovados ou exclua os que não devem aparecer no site.</p>
-                </div>
-                <button id="refresh-button" class="ghost-button" type="button">Atualizar</button>
-            </div>
-
-            <section class="stats" aria-label="Resumo">
-                <article class="stat-card stat-pending">
-                    <span class="stat-label">Aguardando</span>
-                    <strong id="stat-pending">0</strong>
-                </article>
-                <article class="stat-card stat-published">
-                    <span class="stat-label">Publicados</span>
-                    <strong id="stat-published">0</strong>
-                </article>
-                <article class="stat-card stat-average">
-                    <span class="stat-label">Nota média</span>
-                    <strong id="stat-average">—</strong>
-                </article>
-            </section>
-
-            <section class="board" aria-label="Comentários">
-                <div class="tabs" role="tablist">
-                    <button id="tab-pending" class="tab is-active" type="button" role="tab" aria-selected="true" data-tab="pending">
-                        Aguardando <span id="tab-pending-count" class="tab-count">0</span>
-                    </button>
-                    <button id="tab-published" class="tab" type="button" role="tab" aria-selected="false" data-tab="published">
-                        Publicados <span id="tab-published-count" class="tab-count">0</span>
-                    </button>
-                </div>
-
-                <p id="board-message" class="board-message" role="status" aria-live="polite"></p>
-                <div id="comments-board" class="comments-board"></div>
-            </section>
-        </main>
-    </div>
+    <footer>
+        <p>&copy; 2026 Beach Hills</p>
+    </footer>
 </body>
 </html>
